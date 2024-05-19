@@ -1,0 +1,33 @@
+<canvas id="fractal" width="1920" height="1080"></canvas>
+<script>
+    
+    m = document.getElementById("fractal").getContext("2d")
+
+    create_pixel = function(x, y, c){m.fillStyle=c; m.fillRect(x, y, 1, 1)}
+    zoom_constant = 10000;
+    x_shift = 0.23
+    y_shift = 0.68
+    circle_center = 500;
+    circle_radius = 200;
+    for(x = 0; x <= 1920; x++){
+        for(y = 0; y <= 1080; y++){
+
+            dx = (x - circle_center) / zoom_constant - x_shift;
+            dy = (y - circle_center) / zoom_constant - y_shift;
+            A = dx;
+            B = dy;
+
+            for(t = 0; t <= 100; t++){
+                distance_from_the_center = (A * A) - (B * B) + dx;
+                B = 2 * (A * B) + dy;
+                A = distance_from_the_center;
+                paint_rule = distance_from_the_center > circle_radius;
+                if(paint_rule){
+                    create_pixel(x, y, "rgb(" + (t * 0.5) + "," + t +","+ (t * 3) + ")");
+                    break;
+                }
+            }
+        }
+    }
+</script>
+tagberli
